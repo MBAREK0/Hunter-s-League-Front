@@ -22,16 +22,62 @@
               <div class="col-md-7 d-flex flex-center">
                 <div class="p-4 p-md-5 flex-grow-1">
                   <h3>Register</h3>
-                  <form>
-                    <div class="mb-3"><label class="form-label" for="card-name">Name</label><input class="form-control" type="text" autocomplete="on" id="card-name" /></div>
-                    <div class="mb-3"><label class="form-label" for="card-email">Email address</label><input class="form-control" type="email" autocomplete="on" id="card-email" /></div>
-                    <div class="row gx-2">
-                      <div class="mb-3 col-sm-6"><label class="form-label" for="card-password">Password</label><input class="form-control" type="password" autocomplete="on" id="card-password" /></div>
-                      <div class="mb-3 col-sm-6"><label class="form-label" for="card-confirm-password">Confirm Password</label><input class="form-control" type="password" autocomplete="on" id="card-confirm-password" /></div>
+                  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <!-- Username -->
+                    <div class="mb-3">
+                      <label class="form-label" for="username">Username</label>
+                      <input class="form-control" type="text" id="username" formControlName="username" />
                     </div>
-                    <div class="form-check"><input class="form-check-input" type="checkbox" id="card-register-checkbox" /><label class="form-label" for="card-register-checkbox">I accept the <a href="#!">terms </a>and <a class="white-space-nowrap" href="#!">privacy policy</a></label></div>
-                    <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Register</button></div>
+
+                    <!-- First and Last Name -->
+                    <div class="row gx-2">
+                      <div class="mb-3 col-sm-6">
+                        <label class="form-label" for="firstName">First Name</label>
+                        <input class="form-control" type="text" id="firstName" formControlName="firstName" />
+                      </div>
+                      <div class="mb-3 col-sm-6">
+                        <label class="form-label" for="lastName">Last Name</label>
+                        <input class="form-control" type="text" id="lastName" formControlName="lastName" />
+                      </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                      <label class="form-label" for="email">Email</label>
+                      <input class="form-control" type="email" id="email" formControlName="email" />
+                    </div>
+
+                    <!-- Password and Confirm Password -->
+                    <div class="row gx-2">
+                      <div class="mb-3 col-sm-6">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" type="password" id="password" formControlName="password" />
+                      </div>
+                      <div class="mb-3 col-sm-6">
+                        <label class="form-label" for="confirmPassword">Confirm Password</label>
+                        <input class="form-control" type="password" id="confirmPassword" formControlName="confirmPassword" />
+                      </div>
+                    </div>
+
+                    <!-- CIN -->
+                    <div class="mb-3">
+                      <label class="form-label" for="cin">CIN</label>
+                      <input class="form-control" type="text" id="cin" formControlName="cin" />
+                    </div>
+
+                    <!-- Nationality -->
+                    <div class="mb-3">
+                      <label class="form-label" for="nationality">Nationality</label>
+                      <select class="form-select" id="nationality" formControlName="nationality">
+                        <option value="" disabled>Select one</option>
+                        <option *ngFor="let nationality of nationalities" [value]="nationality">{{ nationality }}</option>
+                      </select>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="btn btn-primary" type="submit">Register</button>
                   </form>
+
                   <div class="position-relative mt-4">
                     <hr />
                     <div class="divider-content-center">or register with</div>

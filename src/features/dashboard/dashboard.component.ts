@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { CommonModule } from '@angular/common';
+import {RouterOutlet} from "@angular/router"; // Import CommonModule
 
 
 @Component({
@@ -7,7 +8,7 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterOutlet]
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   theme: string = 'auto'; // Default theme
