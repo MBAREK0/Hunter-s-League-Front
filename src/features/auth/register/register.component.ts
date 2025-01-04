@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { nationalities} from '../../../core/data/nationalities';
 
 @Component({
@@ -11,7 +11,8 @@ import { nationalities} from '../../../core/data/nationalities';
   imports: [
     RouterLink,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    NgOptimizedImage
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
@@ -57,16 +58,15 @@ export class RegisterComponent {
 
       this.authService.register(this.registerForm.value).subscribe({
         next: (response) => {
-          console.log('Registration successful', response);
           // save the token in local storage
           localStorage.setItem('token', response.token);
           // redirect to the dashboard
-          this.router.navigate(['/']).then(r => console.log('Navigated to dashboard', r));
+          this.router.navigate(['/']).then(r => console.log(r));
 
           this.serverErrorMessage = null;
         },
         error: (err) => {
-          this.serverErrorMessage = err.message?.message || 'Registration failed';
+          this.serverErrorMessage = err.error?.message || 'Registration failed';
         },
       });
     } else {

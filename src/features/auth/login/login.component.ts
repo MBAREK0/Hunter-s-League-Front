@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../../core/services/auth.service';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 
 @Component({
@@ -7,24 +10,44 @@ import {RouterLink} from "@angular/router";
   standalone: true,
   templateUrl: './login.component.html',
   imports: [
-    RouterLink
+    RouterLink,
+    ReactiveFormsModule,
+    CommonModule,
+    NgOptimizedImage
   ]
 })
 export class LoginComponent {
-  // username: string = '';
-  // password: string = '';
-  //
-  // constructor(private authService: AuthService, private router: Router) {}
-  //
-  // onSubmit() {
-  //   this.authService.login(this.username, this.password).subscribe({
-  //     next: () => {
-  //       this.router.navigate(['/dashboard']); // Redirect to dashboard after login
-  //     },
-  //     error: (err) => {
-  //       console.error('Login failed', err);
-  //       alert('Login failed. Please try again.');
-  //     },
-  //   });
-  // }
+  loginForm: FormGroup;
+  serverErrorMessage: string | null = null;
+
+
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['',Validators.required]
+    });
+  }
+
+
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          // save the token in local storage
+          localStorage.setItem('token', response.token);
+          // redirect to the dashboard
+          this.router.navigate(['/']).then(r => console.log(r));
+
+          this.serverErrorMessage = null;
+        },
+        error: (err) => {
+          this.serverErrorMessage = err.error?.message || 'An error occurred';
+        },
+      });
+    } else {
+      console.log('Form is invalid');
+    }
+  }
 }

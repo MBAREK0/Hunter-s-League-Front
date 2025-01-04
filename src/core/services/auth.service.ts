@@ -9,13 +9,17 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
 
-  private readonly apiUrl = `${environment.apiUrl}/auth/register`;
+  private readonly registerUri = `${environment.apiUrl}/auth/register`;
+  private readonly loginUri = `${environment.apiUrl}/auth/login`;
 
   constructor(private http: HttpClient) {}
 
-
-
   register(payload: any): Observable<any> {
-    return this.http.post(this.apiUrl, payload);
+    return this.http.post(this.registerUri, payload);
   }
+
+  login(payload: any): Observable<any> {
+    return this.http.post(this.loginUri, payload);
+  }
+
 }
