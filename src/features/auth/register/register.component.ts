@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router, RouterLink} from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import {NgForOf} from "@angular/common";
+import { CommonModule } from '@angular/common';
+import { nationalities} from '../../../core/data/nationalities';
 
 @Component({
   selector: 'app-register',
@@ -10,21 +11,17 @@ import {NgForOf} from "@angular/common";
   imports: [
     RouterLink,
     ReactiveFormsModule,
-    NgForOf
+    CommonModule
   ],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  nationalities: string[] = [
-    'Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan',
-    'Antiguans', 'Argentinean', 'Armenian', 'Australian', 'Austrian',
-    'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi', 'Barbadian',
-    // Add the rest of the nationalities...
-  ];
+  serverErrorMessage: string | null = null;
+  nationalities: string[] = nationalities;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       password: [
@@ -32,21 +29,12 @@ export class RegisterComponent {
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern('.*[a-z].*'), // At least one lowercase letter
-          Validators.pattern('.*[A-Z].*'), // At least one uppercase letter
-          Validators.pattern('.*[0-9].*'), // At least one digit
+          Validators.pattern('.*[a-z].*'),
+          Validators.pattern('.*[A-Z].*'),
+          Validators.pattern('.*[0-9].*'),
         ],
       ],
-      confirmPassword: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern('.*[a-z].*'), // At least one lowercase letter
-          Validators.pattern('.*[A-Z].*'), // At least one uppercase letter
-          Validators.pattern('.*[0-9].*'), // At least one digit
-        ],
-      ],
+      confirmPassword: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       cin: ['', Validators.required],
@@ -55,16 +43,31 @@ export class RegisterComponent {
     });
   }
 
+  get passwordMismatch(): boolean {
+    const { password, confirmPassword } = this.registerForm.value;
+    return password && confirmPassword && password !== confirmPassword;
+  }
+
   onSubmit(): void {
     if (this.registerForm.valid) {
-      if (this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
-        console.log('Passwords do not match');
+      if (this.passwordMismatch) {
+        this.serverErrorMessage = 'Passwords do not match';
         return;
       }
 
       this.authService.register(this.registerForm.value).subscribe({
-        next: (response) => console.log('Registration successful', response),
-        error: (err) => console.error('Registration failed', err),
+        next: (response) => {
+          console.log('Registration successful', response);
+          // save the token in local storage
+          localStorage.setItem('token', response.token);
+          // redirect to the dashboard
+          this.router.navigate(['/']).then(r => console.log('Navigated to dashboard', r));
+
+          this.serverErrorMessage = null;
+        },
+        error: (err) => {
+          this.serverErrorMessage = err.message?.message || 'Registration failed';
+        },
       });
     } else {
       console.log('Form is invalid');
