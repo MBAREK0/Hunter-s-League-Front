@@ -59,7 +59,7 @@ export class RegisterComponent {
       this.authService.register(this.registerForm.value).subscribe({
         next: (response) => {
           // save the token in local storage
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('authToken', response.token);
           // redirect to the dashboard
           this.router.navigate(['/']).then(r => console.log(r));
 
