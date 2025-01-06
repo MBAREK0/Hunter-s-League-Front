@@ -20,7 +20,6 @@ export class SearchComponent {
   // save Competition fields names in array to use in sort select
   sorts: { key: string; value: string }[] = [
     { key: 'Date', value: 'date' },
-    { key: 'Registration', value: 'openRegistration' },
     { key: 'Location', value: 'location' },
     { key: 'Type', value: 'speciesType' },
   ];

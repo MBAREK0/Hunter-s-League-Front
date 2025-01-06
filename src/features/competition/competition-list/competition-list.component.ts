@@ -6,15 +6,19 @@ import { Observable, of } from 'rxjs';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SearchComponent } from "../../../shared/components/search/search.component";
+import {PaginationComponent} from "../../../shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-competition-list',
   standalone: true,
-  imports: [CompetitionCardComponent, AsyncPipe, CommonModule, SearchComponent],
+  imports: [CompetitionCardComponent, AsyncPipe, CommonModule, SearchComponent, PaginationComponent],
   templateUrl: './competition-list.component.html'
 })
 export class CompetitionListComponent implements OnInit {
   competitions$: Observable<any[]> = of([]);
+  totalPages$: Observable<any> = of();
+  currentPage$: Observable<any> = of();
+
   searchForm: FormGroup;
 
   constructor(
@@ -25,8 +29,9 @@ export class CompetitionListComponent implements OnInit {
       search: new FormControl(''),
       sort: new FormControl('Date'),
       page: new FormControl(1),
-      size: new FormControl(30),
+      size: new FormControl(10),
     });
+
 
   }
 
@@ -38,8 +43,20 @@ export class CompetitionListComponent implements OnInit {
 
   fetchCompetitions(formValues: any): Observable<any[]> {
     const { search, sort, page, size } = formValues;
-    this.competitions$ = this.competitionService.getCompetitions(search, sort, page, size);
-    return this.competitions$;
+     this.competitionService.getCompetitions(search, sort, page, size).subscribe(
+        (data) => {
+          this.competitions$ = of(data.content);
+          this.totalPages$ = of(data.totalPages);
+          this.currentPage$ = of(data.pageable.pageNumber);
+        }
+    );
+    console.log('Competitions', this.competitions$);
+     this.competitions$.subscribe(
+        (data) => {
+            console.log('Data', data);
+        }
+    );
+    return this.competitions$
   }
 
   onSearchChange(searchKeyWord: string): void {
@@ -51,6 +68,16 @@ export class CompetitionListComponent implements OnInit {
     this.searchForm.patchValue({ sort: sortKeyWord });
     this.fetchCompetitions(this.searchForm.value);
   }
+
+  onSizeChange(size: number): void {
+    this.searchForm.patchValue({ size });
+    this.fetchCompetitions(this.searchForm.value);
+  }
+
+  onChangePage(page: number): void {
+    this.searchForm.patchValue({ page });
+    this.fetchCompetitions(this.searchForm.value); }
+
 
 
 }

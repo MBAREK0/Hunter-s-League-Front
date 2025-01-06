@@ -20,7 +20,7 @@ export class CompetitionService {
     params = params.set('page', page.toString());
     params = params.set('size', size.toString());
 
-    return this.http.get<any>(this.baseUrl, { params });
+    return this.http.get<any>(this.baseUrl, { params })
   }
 }
 

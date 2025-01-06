@@ -1,0 +1,66 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row g-3 flex-center justify-content-md-between">
+
+      <!-- Size Selector -->
+      <div class="col-auto">
+        <div class="row gx-2">
+          <div class="col-auto"><small>Show:</small></div>
+          <div class="col-auto">
+            <select (change)="onSizeChange($event)" class="form-select form-select-sm" aria-label="Show courses">
+              <option [selected]="size === 10" value="10">10</option>
+              <option [selected]="size === 20" value="20">20</option>
+              <option [selected]="size === 50" value="50">50</option>
+              <option [selected]="size === 100" value="100">100</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination Controls -->
+      <div class="col-auto">
+        <button
+          class="btn btn-falcon-default btn-sm me-2"
+          [disabled]="currentPage === 0"
+          (click)="changePage(currentPage - 1)">
+          <span class="fas fa-chevron-left"></span>
+        </button>
+
+        <!-- First Pages -->
+        <ng-container *ngFor="let page of firstPages">
+          <button
+            class="btn btn-sm btn-falcon-default me-2"
+            [class.text-primary]="page === currentPage"
+            (click)="changePage(page)">
+            {{ page + 1 }}
+          </button>
+        </ng-container>
+
+        <!-- Ellipsis between first and last pages -->
+        <ng-container *ngIf="showEllipsisBeforeLastPages()">
+          <button class="btn btn-sm btn-falcon-default me-2" disabled>...</button>
+        </ng-container>
+
+        <!-- Last Pages -->
+
+          <ng-container *ngFor="let page of lastPages">
+            <button
+              class="btn btn-sm btn-falcon-default me-2"
+              [class.text-primary]="page === currentPage"
+              (click)="changePage(page)">
+              {{ page + 1 }}
+            </button>
+          </ng-container>
+
+
+        <button
+          class="btn btn-falcon-default btn-sm"
+          [disabled]="currentPage >= totalPages - 1"
+          (click)="changePage(currentPage + 1)">
+          <span class="fas fa-chevron-right"></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
