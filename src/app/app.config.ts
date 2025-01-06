@@ -4,13 +4,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { importProvidersFrom } from '@angular/core';
 import { routes } from './app.routes';
-// import { provideAnimations } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptorInterceptor } from '../core/interceptors/auth-interceptor.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    // provideAnimations(),
-    importProvidersFrom(MatButtonModule, MatToolbarModule, HttpClientModule),
+    importProvidersFrom(
+      MatButtonModule,
+      MatToolbarModule
+    ),
+    provideHttpClient(
+      withInterceptors([authInterceptorInterceptor])
+    ),
   ],
 };

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
+import {CompetitionListComponent} from "../competition/competition-list/competition-list.component";
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
-})
-export class HomeComponent {
-
-}
+  template : `<app-competition-list/>`,
+  imports: [
+    CompetitionListComponent
+  ]})
+export class HomeComponent {}

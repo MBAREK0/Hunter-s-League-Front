@@ -14,6 +14,6 @@ export class LogoutComponent {
 
   logout(): void {
     localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 }

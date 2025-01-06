@@ -1,0 +1,89 @@
+<div class="row g-3 mb-3">
+  <div class="col-sm-6 col-md-4">
+    <div class="card overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(../../../assets/img/icons/spot-illustrations/corner-1.png);"></div><!--/.bg-holder-->
+      <div class="card-body position-relative">
+        <h6>Customers<span class="badge badge-subtle-warning rounded-pill ms-2">-0.23%</span></h6>
+        <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif text-warning" data-countup='{"endValue":58.386,"decimalPlaces":2,"suffix":"k"}'>0</div><a class="fw-semi-bold fs-10 text-nowrap" href="../app/e-commerce/customers.html">See all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-4">
+    <div class="card overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(../../../assets/img/icons/spot-illustrations/corner-2.png);"></div><!--/.bg-holder-->
+      <div class="card-body position-relative">
+        <h6>Orders<span class="badge badge-subtle-info rounded-pill ms-2">0.0%</span></h6>
+        <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif text-info" data-countup='{"endValue":23.434,"decimalPlaces":2,"suffix":"k"}'>0</div><a class="fw-semi-bold fs-10 text-nowrap" href="../app/e-commerce/orders/order-list.html">All orders<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card overflow-hidden" style="min-width: 12rem">
+      <div class="bg-holder bg-card" style="background-image:url(../../../assets/img/icons/spot-illustrations/corner-3.png);"></div><!--/.bg-holder-->
+      <div class="card-body position-relative">
+        <h6>Revenue<span class="badge badge-subtle-success rounded-pill ms-2">9.54%</span></h6>
+        <div class="display-4 fs-5 mb-2 fw-normal font-sans-serif" data-countup='{"endValue":43594,"prefix":"$"}'>0</div><a class="fw-semi-bold fs-10 text-nowrap" href="../index.html">Statistics<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div >
+  <div class="card mb-3">
+    <div class="card-header position-relative">
+      <h5 class="mb-0 mt-1">All Courses</h5>
+      <div class="bg-holder d-none d-md-block bg-card" style="background-image:url(../../../assets/img/illustrations/corner-6.png);"></div><!--/.bg-holder-->
+    </div>
+    <div class="card-body pt-0 pt-md-3">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto d-xl-none"><button class="btn btn-sm p-0 btn-link position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas" aria-controls="filterOffcanvas"><span class="fas fa-filter fs-9 text-700"></span></button></div>
+        <div class="col">
+          <form class="position-relative"><input class="form-control form-control-sm search-input lh-1 rounded-2 ps-4" type="search" placeholder="Search..." aria-label="Search" />
+            <div class="position-absolute top-50 start-0 translate-middle-y ms-2"><span class="fas fa-search text-400 fs-10"></span></div>
+          </form>
+        </div>
+        <div class="col position-sm-relative position-absolute top-0 end-0 me-3 me-sm-0 p-0">
+          <div class="row g-0 g-md-3 justify-content-end">
+            <div class="col-auto">
+              <form class="row gx-2">
+                <div class="col-auto d-none d-lg-block"><small class="fw-semi-bold">Sort by:</small></div>
+                <div class="col-auto"> <select class="form-select form-select-sm" aria-label="Bulk actions">
+                  <option value="rating">Rating</option>
+                  <option value="review">Review</option>
+                  <option value="price">Price</option>
+                </select></div>
+              </form>
+            </div>
+            <div class="col-auto">
+              <div class="d-flex align-items-center"><small class="fw-semi-bold d-none d-lg-block lh-1">View:</small>
+                <div class="d-flex"><a class="btn btn-link btn-sm text-400 hover-700" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Course Grid"><span class="fas fa-th fs-8" data-fa-transform="down-1"></span></a><a class="btn btn-link btn-sm px-1 text-700" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Course List"><span class="fas fa-list-ul fs-8" data-fa-transform="down-1"></span></a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="competitions$ | async as competitions">
+    <app-competition-card *ngFor="let competition of competitions" [data]="competition"></app-competition-card>
+  </ng-container>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row g-3 flex-center justify-content-md-between">
+        <div class="col-auto">
+          <form class="row gx-2">
+            <div class="col-auto"><small>Show:</small></div>
+            <div class="col-auto"> <select class="form-select form-select-sm" aria-label="Show courses">
+              <option selected="selected" value="9">9</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select></div>
+          </form>
+        </div>
+        <div class="col-auto"> <button class="btn btn-falcon-default btn-sm me-2" type="button" disabled="disabled" data-bs-toggle="tooltip" data-bs-placement="top" title="Prev"><span class="fas fa-chevron-left"></span></button><a class="btn btn-sm btn-falcon-default text-primary me-2" href="#!">1</a><a class="btn btn-sm btn-falcon-default me-2" href="#!">2</a><a class="btn btn-sm btn-falcon-default me-2" href="#!"> <span class="fas fa-ellipsis-h"></span></a><a class="btn btn-sm btn-falcon-default me-2" href="#!">303</a><button class="btn btn-falcon-default btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Next"><span class="fas fa-chevron-right"></span></button></div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -20,6 +20,7 @@ export const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
+      // home route
       {
         path: '',
         component: HomeComponent,
