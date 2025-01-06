@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -13,17 +13,14 @@ export class CompetitionService {
 
   constructor(private http: HttpClient) { }
 
-  // private getHeaders(): HttpHeaders {
-  //   const token = localStorage.getItem('authToken');
-  //   return new HttpHeaders({
-  //     'Authorization': `Bearer ${token}`,
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json'
-  //   });
-  // }
+  getCompetitions(search: string = '',sort: string = '', page: number = 1, size: number = 10): Observable<any> {
+    let params = new HttpParams();
+    if (search) params = params.set('searchKeyword', search);
+    params = params.set('sortField', sort);
+    params = params.set('page', page.toString());
+    params = params.set('size', size.toString());
 
-  getCompetitions(): Observable<any> {
-    // const headers = this.getHeaders();
-    return this.http.get(this.baseUrl);
+    return this.http.get<any>(this.baseUrl, { params });
   }
 }
+

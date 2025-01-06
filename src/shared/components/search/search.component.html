@@ -1,0 +1,60 @@
+<div class="card mb-3">
+  <div class="card-header position-relative">
+    <h5 class="mb-0 mt-1">All {{ title }}</h5>
+    <div class="bg-holder d-none d-md-block bg-card"
+         style="background-image:url(../../../assets/img/illustrations/corner-6.png);"></div>
+  </div>
+  <div class="card-body pt-0 pt-md-3">
+    <div class="row g-3 align-items-center">
+      <!-- Filter button for smaller screens -->
+      <div class="col-auto d-xl-none">
+        <button class="btn btn-sm p-0 btn-link position-relative"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#filterOffcanvas"
+                aria-controls="filterOffcanvas">
+          <span class="fas fa-filter fs-9 text-700"></span>
+        </button>
+      </div>
+
+      <!-- Search input -->
+      <div class="col">
+        <div class="position-relative">
+          <input
+            (input)="onSearchChange($event)"
+            class="form-control form-control-sm search-input lh-1 rounded-2 ps-4"
+            type="search"
+            placeholder="Search..."
+            aria-label="Search"
+            />
+          <div class="position-absolute top-50 start-0 translate-middle-y ms-2">
+            <span class="fas fa-search text-400 fs-10"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sort dropdown -->
+      <div class="col position-sm-relative position-absolute top-0 end-0 me-3 me-sm-0 p-0">
+        <div class="row g-0 g-md-3 justify-content-end">
+          <div class="col-auto">
+            <div class="row gx-2">
+              <div class="col-auto d-none d-lg-block">
+                <small class="fw-semi-bold">Sort by:</small>
+              </div>
+              <div class="col-auto">
+                <select
+                  class="form-select form-select-sm"
+                  aria-label="Sort by"
+                  (change)="onSortChange($event)"
+                  >
+                  <option  value=""></option>
+                  <option *ngFor="let sort of sorts" [value]="sort.value">{{ sort.key }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

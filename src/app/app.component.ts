@@ -7,8 +7,8 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, FontAwesomeModule,],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  template: '<router-outlet />',
+
 })
 export class AppComponent {
   title = 'Hunter-Is-League-Front';
