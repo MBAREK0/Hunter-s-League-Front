@@ -34,7 +34,7 @@ export const routes: Routes = [
     path: 'unauthorized',
     component: UnauthorizedComponent
   },
-  { path: 'logout', component: LogoutComponent },
+  { path: 'auth/logout', component: LogoutComponent },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', redirectTo: '/' },
 ];

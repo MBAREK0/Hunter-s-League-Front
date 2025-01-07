@@ -38,9 +38,11 @@ export class LoginComponent {
         next: (response) => {
           // save the token in local storage
           localStorage.setItem('authToken', response.token);
+          // save the refreshToken in local storage
+          localStorage.setItem('refreshToken', response.refreshToken);
+
           // redirect to the dashboard
           this.router.navigate(['/']).then(r => console.log(r));
-          console.log('Login successful',this.jwtService.getDecodedAccessToken(response.token));
 
           this.serverErrorMessage = null;
         },

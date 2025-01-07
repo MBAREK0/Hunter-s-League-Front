@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RouterOutlet} from "@angular/router";
+import {RouterLink, RouterOutlet} from "@angular/router";
 import {AsideComponent} from "../../shared/components/aside/aside.component"; // Import CommonModule
 
 
@@ -9,7 +9,7 @@ import {AsideComponent} from "../../shared/components/aside/aside.component"; //
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterOutlet, AsideComponent]
+  imports: [CommonModule, RouterOutlet, AsideComponent, RouterLink]
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   theme: string = 'auto'; // Default theme
