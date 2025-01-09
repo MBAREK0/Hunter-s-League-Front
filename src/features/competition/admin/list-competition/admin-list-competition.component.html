@@ -1,0 +1,79 @@
+<!--<app-competition-table [data]="competitions$ | async" [columns]="columns" [actions]="actions"></app-competition-table>-->
+
+
+<app-search
+  [title]="'Competition'"
+  [formGroup]="searchForm"
+  (SearchChange)="onSearchChange($event)"
+  (SortChange)="onSortChange($event)"
+/>
+
+<ng-container>
+  <div style="display: flex; justify-content: flex-end; padding: 10px 0;" >
+    <button class="btn btn-outline-primary me-1 mb-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Create Competition</button>
+  </div>
+</ng-container>
+
+  <ng-container *ngIf="competitions$ | async ">
+    <app-competition-table
+      [data$]="competitions$"
+      (editButtonClicked) = "onEditCompetition($event)"
+    />
+  </ng-container>
+
+<app-pagination
+  (SizeChange)="onSizeChange($event)"
+  (PageChange)="onChangePage($event)"
+  [currentPage]="currentPage$ | async"
+  [totalPages]="totalPages$ | async"
+  [size]="searchForm.get('size')?.value"
+/>
+
+<div class="offcanvas offcanvas-end" id="offcanvasRight" tabindex="-1" aria-labelledby="offcanvasRightLabel">
+  <div style="display: flex; justify-content: space-between; padding: 10px 10px;">
+    <h2 id="offcanvasRightLabel">Create New Competition</h2>
+    <button class="btn-close text-reset" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+
+
+  <div class="offcanvas-body">
+    <div *ngIf="created" class="alert alert-success" role="alert">
+      Competition created successfully.
+    </div>
+
+    <app-competition-form
+      (createCompetitionFormSubmit)="onCreateCompetition($event)"
+      [serverErrorMessage]="errorServer"
+      [loading]="loading"
+    />
+  </div>
+
+</div>
+
+
+
+<div class="modal fade" id="error-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 500px">
+    <div class="modal-content position-relative">
+      <div class="position-absolute top-0 end-0 mt-2 me-2 z-1">
+        <button class="btn-close btn btn-sm btn-circle d-flex flex-center transition-base" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="rounded-top-3 py-3 ps-4 pe-6 bg-body-tertiary">
+          <h4 class="mb-1" id="modalExampleDemoLabel">Add a new illustration </h4>
+        </div>
+        <div class="p-4 pb-0">
+          <app-competition-form
+            [formMode]="'edit'"
+            [competition]="selectedCompetition$ | async"
+            (updateCompetitionFormSubmit)="onUpdateCompetition($event)"
+            [loading]="loading"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>

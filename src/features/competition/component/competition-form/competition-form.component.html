@@ -1,0 +1,93 @@
+<form [formGroup]="createCompetitionForm" (ngSubmit)="onSubmit()">
+
+
+   <input type="hidden" formControlName="id" />
+
+  <div class="form-floating mb-3">
+    <input
+      class="form-control"
+      id="competition-location"
+      type="text"
+      placeholder="Location"
+      formControlName="location"
+    />
+    <label for="competition-location">Competition Location</label>
+    <div *ngIf="createCompetitionForm.get('location')?.invalid && createCompetitionForm.get('location')?.touched" class="text-danger">
+      Location is required.
+    </div>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input
+      class="form-control"
+      id="competition-date"
+      type="date"
+      formControlName="date"
+    />
+    <label for="competition-date">Competition Date</label>
+    <div *ngIf="createCompetitionForm.get('date')?.hasError('invalidDate') && createCompetitionForm.get('date')?.touched" class="text-danger">
+      The competition date must be in the future.
+    </div>
+    <div *ngIf="createCompetitionForm.get('date')?.hasError('required') && createCompetitionForm.get('date')?.touched" class="text-danger">
+      Date is required.
+    </div>
+  </div>
+
+  <div class="form-floating mb-3">
+    <select
+      class="form-select"
+      id="species-type"
+      formControlName="speciesType"
+    >
+      <option *ngFor="let type of speciesTypes" [value]="type">
+        {{ type }}
+      </option>
+    </select>
+    <label for="species-type">Species Type</label>
+    <div *ngIf="createCompetitionForm.get('speciesType')?.invalid && createCompetitionForm.get('speciesType')?.touched" class="text-danger">
+      Species Type is required.
+    </div>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input
+      class="form-control"
+      id="min-participants"
+      type="number"
+      placeholder="Min Participants"
+      formControlName="minParticipants"
+    />
+    <label for="min-participants">Min Participants</label>
+    <div *ngIf="createCompetitionForm.get('minParticipants')?.invalid && createCompetitionForm.get('minParticipants')?.touched" class="text-danger">
+      Minimum participants must be at least 1.
+    </div>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input
+      class="form-control"
+      id="max-participants"
+      type="number"
+      placeholder="Max Participants"
+      formControlName="maxParticipants"
+    />
+    <label for="max-participants">Max Participants</label>
+    <div *ngIf="createCompetitionForm.get('maxParticipants')?.invalid && createCompetitionForm.get('maxParticipants')?.touched" class="text-danger">
+      Maximum participants must be at least 1.
+    </div>
+  </div>
+
+  <app-button-loader *ngIf="loading; else notLoading"></app-button-loader>
+
+  <ng-template #notLoading>
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary" type="submit" [disabled]="createCompetitionForm.invalid">
+        {{ formMode === 'create' ? 'Create' : 'Update' }} Competition
+      </button>
+    </div>
+  </ng-template>
+
+  <div *ngIf="serverErrorMessage" class="text-danger mt-3">
+    {{ serverErrorMessage }}
+  </div>
+</form>

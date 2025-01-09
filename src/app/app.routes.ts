@@ -6,6 +6,9 @@ import {HomeComponent} from "../features/home/home.component";
 import {UnauthorizedComponent} from "../features/auth/unauthorized/unauthorized.component";
 import {authGuard} from "../core/guards/auth.guard";
 import {LogoutComponent} from "../features/auth/logout/logout.component";
+import {
+  AdminListCompetitionComponent
+} from "../features/competition/admin/list-competition/admin-list-competition.component";
 
 export const routes: Routes = [
   {
@@ -25,7 +28,14 @@ export const routes: Routes = [
         path: '',
         component: HomeComponent,
         canActivate: [authGuard],
-        data: { role: 'MEMBER', permissions: ['CAN_VIEW_RANKINGS','CAN_VIEW_COMPETITIONS','CAN_PARTICIPATE'] },
+        data: { role: ['MEMBER','ADMIN'], permissions: ['CAN_VIEW_RANKINGS','CAN_VIEW_COMPETITIONS','CAN_PARTICIPATE'] },
+      },
+      // competitions route
+      {
+        path: 'competitions',
+        component: AdminListCompetitionComponent,
+        canActivate: [authGuard],
+        data: { role: ['ADMIN']}
       }
 
       ]

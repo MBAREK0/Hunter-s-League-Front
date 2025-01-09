@@ -1,0 +1,66 @@
+<div class="card-body px-0 py-0">
+  <div class="table-responsive scrollbar">
+    <table class="table table-sm fs-10 mb-0 overflow-hidden">
+      <thead class="bg-200">
+      <tr>
+
+        <th class="text-900 sort pe-1 align-middle white-space-nowrap" data-sort="email">Location</th>
+        <th class="text-900 sort pe-1 align-middle white-space-nowrap" data-sort="product">Date</th>
+        <th class="text-900 sort pe-1 align-middle white-space-nowrap text-center" data-sort="payment">Species Type</th>
+        <th class="text-900 sort pe-1 align-middle white-space-nowrap text-end" data-sort="amount">Max Participants</th>
+        <th class="text-900 sort pe-1 align-middle white-space-nowrap text-end" data-sort="amount">Min Participants</th>
+        <th class="text-900 sort pe-1 align-middle white-space-nowrap text-end" data-sort="amount">Registration</th>
+        <th class="no-sort pe-1 align-middle data-table-row-action"></th>
+      </tr>
+      </thead>
+      <tbody class="list" id="table-purchase-body">
+      <tr class="btn-reveal-trigger" *ngFor="let item of data$ | async">
+
+        <td class="align-middle white-space-nowrap email">
+          {{ item.location }}
+        </td>
+        <td class="align-middle white-space-nowrap product">
+          {{ item.date | date: 'dd/MM/yyyy' }}
+        </td>
+        <td class="align-middle text-end amount">
+          {{ item.speciesType }}
+        </td>
+        <td class="align-middle text-end amount">
+          {{ item.maxParticipants }}
+        </td>
+        <td class="align-middle text-end amount">
+          {{ item.minParticipants }}
+        </td>
+        <td *ngIf="item.openRegistration; else registrationClosed" class="align-middle text-center fs-9 white-space-nowrap payment" >
+          <span class="badge badge rounded-pill badge-subtle-success">
+            Open<span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span>
+          </span>
+        </td>
+        <ng-template #registrationClosed>
+          <td class="align-middle text-center fs-9 white-space-nowrap payment">
+            <span class="badge badge rounded-pill badge-subtle-danger">
+              Closed<span class="ms-1 fas fa-times" data-fa-transform="shrink-2"></span>
+            </span>
+          </td>
+        </ng-template>
+
+        <td class="align-middle white-space-nowrap text-end">
+          <div class="dropstart font-sans-serif position-static d-inline-block">
+            <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal float-end" type="button" id="dropdown-recent-purchase-table-0" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
+              <span class="fas fa-ellipsis-h fs-10"></span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-recent-purchase-table-0">
+              <a class="dropdown-item" href="#!">View</a>
+              <a class="dropdown-item"  (click)="onEditButtonClicked(item.id)" data-bs-toggle="modal" data-bs-target="#error-modal">Edit</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item text-danger" href="#!">Delete</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+

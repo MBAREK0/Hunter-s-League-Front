@@ -17,10 +17,14 @@ export class PaginationComponent {
 
 
   get firstPages(): number[] {
-    const startPage = this.currentPage;
-    const endPage = Math.min(this.currentPage + 5, this.totalPages);
-    return Array.from({ length: endPage - startPage }, (_, i) => startPage + i);
+    const startPage = this.currentPage; // Assuming one-based
+    const endPage = Math.min(this.currentPage + 4, this.totalPages); // Show 5 pages max, including current
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
+
+
+
 
   showLastPages(): boolean {
     return this.currentPage < this.totalPages - 7;
@@ -39,12 +43,13 @@ export class PaginationComponent {
     return this.totalPages > 8 && this.currentPage < this.totalPages - 3 && this.currentPage < this.totalPages - 7;
   }
 
-  
+
   get pages(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i);
   }
 
   changePage(page: number): void {
+    console.log('Page', this.firstPages);
     this.PageChange.emit(page);
   }
 
@@ -52,4 +57,6 @@ export class PaginationComponent {
     const size = parseInt(event.target.value, 10);
     this.SizeChange.emit(size);
   }
+
+  protected readonly console = console;
 }

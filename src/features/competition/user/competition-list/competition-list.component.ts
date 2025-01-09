@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { CompetitionCardComponent } from '../component/competition-card/competition-card.component';
-import { CompetitionService } from '../../../core/services/competition.service';
+import { CompetitionCardComponent } from '../../component/competition-card/competition-card.component';
+import { CompetitionService } from '../../../../core/services/competition.service';
 import { Observable, of } from 'rxjs';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { SearchComponent } from "../../../shared/components/search/search.component";
-import {PaginationComponent} from "../../../shared/components/pagination/pagination.component";
+import { SearchComponent } from "../../../../shared/components/search/search.component";
+import {PaginationComponent} from "../../../../shared/components/pagination/pagination.component";
 
 @Component({
   selector: 'app-competition-list',
@@ -28,7 +28,7 @@ export class CompetitionListComponent implements OnInit {
     this.searchForm = new FormGroup({
       search: new FormControl(''),
       sort: new FormControl('Date'),
-      page: new FormControl(1),
+      page: new FormControl(0),
       size: new FormControl(10),
     });
 
@@ -47,13 +47,7 @@ export class CompetitionListComponent implements OnInit {
         (data) => {
           this.competitions$ = of(data.content);
           this.totalPages$ = of(data.totalPages);
-          this.currentPage$ = of(data.pageable.pageNumber);
-        }
-    );
-    console.log('Competitions', this.competitions$);
-     this.competitions$.subscribe(
-        (data) => {
-            console.log('Data', data);
+          this.currentPage$ = of(data.number);
         }
     );
     return this.competitions$

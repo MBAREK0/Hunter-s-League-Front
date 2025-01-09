@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {CompetitionListComponent} from "../competition/competition-list/competition-list.component";
+import {CompetitionListComponent} from "../competition/user/competition-list/competition-list.component";
 
 
 @Component({

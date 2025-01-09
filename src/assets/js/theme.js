@@ -1508,7 +1508,7 @@ var countupInit = function countupInit() {
 };
 
 /*-----------------------------------------------
-|   Data table
+|   Data competition-table
 -----------------------------------------------*/
 var dataTablesInit = function dataTablesInit() {
   if (window.jQuery) {
@@ -1520,7 +1520,7 @@ var dataTablesInit = function dataTablesInit() {
     dataTables.length && dataTables.each(function (index, value) {
       var $this = $(value);
       var options = $.extend({
-        dom: "<'row mx-0'<'col-md-6'l><'col-md-6'f>>" + "<'table-responsive scrollbar'tr>" + "<'row g-0 align-items-center justify-content-center justify-content-sm-between'<'col-auto mb-2 mb-sm-0 px-3'i><'col-auto px-3'p>>"
+        dom: "<'row mx-0'<'col-md-6'l><'col-md-6'f>>" + "<'competition-table-responsive scrollbar'tr>" + "<'row g-0 align-items-center justify-content-center justify-content-sm-between'<'col-auto mb-2 mb-sm-0 px-3'i><'col-auto px-3'p>>"
       }, $this.data('datatables'));
       $this.DataTable(options);
       bulkSelectInit();
@@ -1544,7 +1544,7 @@ var dropdownMenuInit = function dropdownMenuInit() {
       HIDDEN_BS_DROPDOWN: 'hidden.bs.dropdown'
     };
     var Selector = {
-      TABLE_RESPONSIVE: '.table-responsive',
+      TABLE_RESPONSIVE: '.competition-table-responsive',
       DROPDOWN_MENU: '.dropdown-menu'
     };
     document.querySelectorAll(Selector.TABLE_RESPONSIVE).forEach(function (table) {
@@ -4962,8 +4962,8 @@ var tinymceInit = function tinymceInit() {
           toolbar: ['undo', 'bold']
         },
         statusbar: false,
-        plugins: 'link,image,lists,table,media',
-        toolbar: 'styles | bold italic link bullist numlist image blockquote table media undo redo',
+        plugins: 'link,image,lists,competition-table,media',
+        toolbar: 'styles | bold italic link bullist numlist image blockquote competition-table media undo redo',
         directionality: utils.getItemFromStore('isRTL') ? 'rtl' : 'ltr',
         theme_advanced_toolbar_align: 'center',
         setup: function setup(editor) {
@@ -5160,7 +5160,7 @@ var typedTextInit = function typedTextInit() {
 };
 var unresolvedTicketsTabInit = function unresolvedTicketsTabInit() {
   var dropdownToggle = document.querySelectorAll('.dropdown-toggle-item a');
-  var layout = document.querySelector('.table-layout');
+  var layout = document.querySelector('.competition-table-layout');
   dropdownToggle.forEach(function (item) {
     item.addEventListener('shown.bs.tab', function (e) {
       layout.innerText = e.target.innerText;
