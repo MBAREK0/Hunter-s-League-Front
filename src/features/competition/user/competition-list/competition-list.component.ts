@@ -48,6 +48,7 @@ export class CompetitionListComponent implements OnInit {
           this.competitions$ = of(data.content);
           this.totalPages$ = of(data.totalPages);
           this.currentPage$ = of(data.number);
+
         }
     );
     return this.competitions$

@@ -20,7 +20,7 @@ export class PaginationComponent {
     const startPage = this.currentPage; // Assuming one-based
     const endPage = Math.min(this.currentPage + 4, this.totalPages); // Show 5 pages max, including current
 
-    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+    return Array.from({ length: endPage - startPage  }, (_, i) => startPage + i);
   }
 
 
@@ -49,7 +49,6 @@ export class PaginationComponent {
   }
 
   changePage(page: number): void {
-    console.log('Page', this.firstPages);
     this.PageChange.emit(page);
   }
 

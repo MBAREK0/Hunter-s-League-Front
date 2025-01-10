@@ -37,7 +37,6 @@
 
     constructor(private fb: FormBuilder) {
       this.createCompetitionForm = this.fb.group({
-        id: [null],
         location: ['', Validators.required],
         date: ['', [Validators.required,this.futureDateValidator]],
         speciesType: ['', Validators.required],

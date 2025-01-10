@@ -27,12 +27,10 @@ export class SearchComponent {
 
 
   onSearchChange(event: any): void {
-    console.log("Search change", event.target.value);
     const searchKeyword = event.target.value;
     this.SearchChange.emit(searchKeyword);
   }
   onSortChange(event: any): void {
-    console.log("Sort change", event.target.value);
     const sortKeyword = event.target.value;
     this.SortChange.emit(sortKeyword);
   }

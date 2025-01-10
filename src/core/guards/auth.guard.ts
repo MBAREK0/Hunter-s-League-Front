@@ -22,9 +22,6 @@ export const authGuard: CanActivateFn = (route, state) => {
   const userRole = decodedToken?.role;
   const userPermissions = decodedToken?.permissions.map((perm: any) => perm.authority) || [];
 
-  console.log("Token:", token);
-  console.log("Decoded Token:", decodedToken);
-
   if (!userRole || !userPermissions.length) {
     router.navigate(['/auth/login']);
     return false;

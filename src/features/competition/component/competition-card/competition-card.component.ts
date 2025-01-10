@@ -18,6 +18,7 @@ export class CompetitionCardComponent implements OnInit, OnDestroy {
   private interval: any;
 
   ngOnInit(): void {
+    console.log('this.data', this.data);
     this.startCountdown();
   }
 

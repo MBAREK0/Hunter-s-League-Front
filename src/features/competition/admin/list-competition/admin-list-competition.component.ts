@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {TableComponent} from "../../component/competition-table/table.component";
 import {SearchComponent} from "../../../../shared/components/search/search.component";
 import {CompetitionFormComponent} from "../../component/competition-form/competition-form.component";
@@ -8,6 +8,7 @@ import {CompetitionService} from "../../../../core/services/competition.service"
 import {AsyncPipe, NgIf} from "@angular/common";
 import {PaginationComponent} from "../../../../shared/components/pagination/pagination.component";
 import {Competition} from "../../../../core/models/competition";
+import {CompetitionCardComponent} from "../../component/competition-card/competition-card.component";
 
 @Component({
   selector: 'app-list-competition',
@@ -18,7 +19,8 @@ import {Competition} from "../../../../core/models/competition";
     CompetitionFormComponent,
     AsyncPipe,
     PaginationComponent,
-    NgIf
+    NgIf,
+    CompetitionCardComponent
   ],
   templateUrl: './admin-list-competition.component.html'
 })
@@ -27,13 +29,14 @@ export class AdminListCompetitionComponent  implements OnInit{
   totalPages$: Observable<any> = of();
   currentPage$: Observable<any> = of();
   selectedCompetition$: Observable<any> = of();
+  @ViewChild('viewDetailButton', { static: false }) viewDetailButton!: ElementRef;
+
 
   searchForm: FormGroup;
   errorServer: string | null = null;
   loading: boolean = false;
   created: boolean = false;
 
-  iscanvasVisible = true; // Controls the visibility of the offcanvas
 
 
   constructor(
@@ -61,6 +64,7 @@ export class AdminListCompetitionComponent  implements OnInit{
         this.competitions$ = of(data.content);
         this.totalPages$ = of(data.totalPages);
         this.currentPage$ = of(data.number);
+
       }
     );
     return this.competitions$
@@ -90,8 +94,57 @@ export class AdminListCompetitionComponent  implements OnInit{
         },
         error: (error) => {
           this.loading = false;
-          this.errorServer = error.error?.message || 'Competition creation  failed';
+          if (error.status.toString().startsWith('4')) this.errorServer = error.error?.message || 'Competition creation  failed';
+          else this.errorServer = 'An error occured';
         }
+      }
+    );
+  }
+  onUpdateCompetition($event: Competition) {
+    this.errorServer = null;
+    this.loading = true;
+    const formattedEvent = {
+      ...$event,
+      date: new Date($event.date).toISOString().slice(0, 19)
+    };
+
+    this.competitionService.updateCompetition(formattedEvent).subscribe(
+      {
+        next: () => {
+          this.loading = false;
+          this.fetchCompetitions(this.searchForm.value);
+          this.created = true;
+          setTimeout(() => {
+            this.created = false;
+          }, 3000);
+        },
+        error: (error) => {
+          this.loading = false;
+          if (error.status.toString().startsWith('4')) this.errorServer = error.error?.message || 'Competition creation  failed';
+          else this.errorServer = 'An error occured';
+        }
+      }
+    );
+  }
+
+  onDeleteCompetition($event: string) {
+    this.errorServer = null;
+    this.loading = true;
+
+    this.competitionService.deleteCompetition($event).subscribe(
+      {
+        next: () => {
+          this.loading = false;
+          this.fetchCompetitions(this.searchForm.value);
+          this.created = true;
+          setTimeout(() => {
+            this.created = false;
+          }, 3000);
+        },
+        error: (error) => {
+          this.loading = false;
+          if (error.status.toString().startsWith('4')) this.errorServer = error.error?.message || 'Competition creation  failed';
+          else this.errorServer = 'An error occured';        }
       }
     );
   }
@@ -117,8 +170,6 @@ export class AdminListCompetitionComponent  implements OnInit{
   }
 
   onEditCompetition($event: string) {
-    console.log('evnt Edit competition', $event);
-
     this.competitionService.getCompetitionById($event).subscribe(
       {
         next: (data) => {
@@ -126,7 +177,6 @@ export class AdminListCompetitionComponent  implements OnInit{
           data.date = data.date.slice(0, 10);
           this.selectedCompetition$ = of(data);
 
-          console.log('selectedCompetition', data);
         },
         error: (error) => {
           console.error('Error while fetching competition', error);
@@ -135,32 +185,13 @@ export class AdminListCompetitionComponent  implements OnInit{
     )
   }
 
-  onUpdateCompetition($event: Competition) {
+  onViewCompetition($event: Competition) {
 
+    console.log('View competition', $event);
+    this.selectedCompetition$ = of($event);
+    this.viewDetailButton.nativeElement.click();
 
-    this.errorServer = null;
-    this.loading = true;
-    const formattedEvent = {
-      ...$event,
-      date: new Date($event.date).toISOString().slice(0, 19)
-    };
-
-    this.competitionService.updateCompetition(formattedEvent).subscribe(
-      {
-        next: () => {
-          this.loading = false;
-          this.fetchCompetitions(this.searchForm.value);
-          this.created = true;
-          setTimeout(() => {
-            this.created = false;
-          }, 3000);
-        },
-        error: (error) => {
-          this.loading = false;
-          this.errorServer = error.error?.message || 'Competition creation  failed';
-        }
-      }
-    );
   }
+
 
 }

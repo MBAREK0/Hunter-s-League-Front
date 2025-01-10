@@ -32,6 +32,5 @@ import { Component, OnInit } from '@angular/core';
 export class UnauthorizedComponent implements OnInit {
 
   ngOnInit(): void {
-    console.log("refreshToken", localStorage.getItem('refreshToken'));
   }
 }

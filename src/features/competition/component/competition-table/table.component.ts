@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Observable } from 'rxjs';
 import {AsyncPipe, CommonModule} from "@angular/common";
+import {Competition} from "../../../../core/models/competition";
 
 @Component({
   selector: 'app-competition-table',
@@ -11,16 +12,20 @@ import {AsyncPipe, CommonModule} from "@angular/common";
   ],
   templateUrl: './table.component.html'
 })
-export class TableComponent implements OnInit {
+export class TableComponent  {
   @Input() data$!: Observable<any[]>;
   @Output() editButtonClicked = new EventEmitter<any>();
-
-
-  ngOnInit(): void {
-    console.log('TableComponent created with observable:', this.data$);
-  }
+  @Output() deleteButtonClicked = new EventEmitter<any>();
+  @Output() viewButtonClicked = new EventEmitter<any>();
 
   onEditButtonClicked(id : string) {
     this.editButtonClicked.emit(id);
+  }
+  onDeleteButtonClicked(id : string) {
+    this.deleteButtonClicked.emit(id);
+  }
+
+  onViewButtonClicked(competition : Competition) {
+    this.viewButtonClicked.emit(competition);
   }
 }

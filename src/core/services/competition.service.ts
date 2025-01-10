@@ -22,6 +22,7 @@ export class CompetitionService {
     params = params.set('page', page.toString());
     params = params.set('size', size.toString());
 
+
     return this.http.get<any>(this.baseUrl, { params })
   }
 
@@ -30,19 +31,16 @@ export class CompetitionService {
   }
 
   createCompetition(competition: any): Observable<Competition> {
-    console.log('CompetitionService.createCompetition', competition);
-    return this.http.post<Competition>(`${this.baseUrl}`, {
-      location: competition.location,
-      date: competition.date,
-      speciesType: competition.speciesType,
-      minParticipants: competition.minParticipants,
-      maxParticipants: competition.maxParticipants});
+    return this.http.post<Competition>(`${this.baseUrl}`, competition);
   }
 
   updateCompetition(competition: any): Observable<Competition> {
     return this.http.put<Competition>(`${this.baseUrl}/${competition.id}`, competition);
   }
 
+  deleteCompetition(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 
 }
 
