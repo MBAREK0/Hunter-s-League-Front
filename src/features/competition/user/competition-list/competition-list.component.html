@@ -40,7 +40,14 @@
   </app-search>
 
   <ng-container *ngIf="competitions$ | async as competitions">
-    <app-competition-card *ngFor="let competition of competitions" [data]="competition"></app-competition-card>
+    <app-competition-card
+      (participateButtonClicked)="participate($event)"
+      *ngFor="let competition of competitions"
+      [data]="competition"
+      [competitionId]="competitionId$ | async"
+      [errorServer]="errorServer"
+      [created]="created$ | async"
+    ></app-competition-card>
   </ng-container>
 
   <app-pagination

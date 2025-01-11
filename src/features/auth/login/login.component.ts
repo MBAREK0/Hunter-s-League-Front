@@ -41,7 +41,7 @@ export class LoginComponent {
           // save the refreshToken in local storage
           localStorage.setItem('refreshToken', response.refreshToken);
 
-          // redirect to the dashboard
+          // redirect to the layout
           this.router.navigate(['/']).then(r => console.log(r));
 
           this.serverErrorMessage = null;

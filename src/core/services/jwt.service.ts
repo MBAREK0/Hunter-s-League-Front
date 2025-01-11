@@ -5,9 +5,10 @@ import {Injectable} from "@angular/core"; // Use a named import
   providedIn: 'root',
 })
 export class JwtService {
-  getDecodedAccessToken(token: string): any {
+  getDecodedAccessToken(token: string | null): any {
     try {
-      return jwtDecode(token); // Use the named function
+      if (!token) return null;
+      return jwtDecode(token);
     } catch (Error) {
       return null;
     }
@@ -21,5 +22,7 @@ export class JwtService {
     const decodedToken = this.getDecodedAccessToken(token);
     return decodedToken?.permissions.map((perm: any) => perm.authority) || [];
   }
+
+
 
 }

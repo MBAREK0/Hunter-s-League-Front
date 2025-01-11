@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {booleanAttribute, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {CommonModule, DatePipe} from '@angular/common';
 import { Competition } from '../../../../core/models/competition';
 
@@ -8,17 +8,19 @@ import { Competition } from '../../../../core/models/competition';
   selector: 'app-competition-card',
   standalone: true,
   imports: [DatePipe,CommonModule],
-  templateUrl: './competition-card.component.html',
-  styleUrls: ['./competition-card.component.css']
+  templateUrl: './competition-card.component.html'
 })
 export class CompetitionCardComponent implements OnInit, OnDestroy {
   @Input() data!: Competition;
+  @Output() participateButtonClicked = new EventEmitter<any>();
+  @Input() competitionId : string | null = null;
+  @Input() errorServer : string | null = null;
+  @Input({transform: booleanAttribute}) created : boolean = false;
 
   countdown: string = '00:00:00:00';
   private interval: any;
 
   ngOnInit(): void {
-    console.log('this.data', this.data);
     this.startCountdown();
   }
 
@@ -51,5 +53,9 @@ export class CompetitionCardComponent implements OnInit, OnDestroy {
 
   padZero(num: number): string {
     return num < 10 ? '0' + num : num.toString();
+  }
+
+  participate(): void {
+    this.participateButtonClicked.emit(this.data.id);
   }
 }

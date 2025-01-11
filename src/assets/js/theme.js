@@ -9215,7 +9215,7 @@ var linePaymentChartInit = function linePaymentChartInit() {
         });
       }
     });
-    var selectMenu = document.querySelector('#dashboard-chart-select');
+    var selectMenu = document.querySelector('#layout-chart-select');
     if (selectMenu) {
       selectMenu.addEventListener('change', function (e) {
         var value = e.currentTarget.value;

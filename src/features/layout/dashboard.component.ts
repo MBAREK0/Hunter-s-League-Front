@@ -5,7 +5,7 @@ import {AsideComponent} from "../../shared/components/aside/aside.component"; //
 
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-layout',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,

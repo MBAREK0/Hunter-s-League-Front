@@ -1,30 +1,30 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {TableComponent} from "../../component/competition-table/table.component";
-import {SearchComponent} from "../../../../shared/components/search/search.component";
-import {CompetitionFormComponent} from "../../component/competition-form/competition-form.component";
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AsyncPipe, NgIf} from "@angular/common";
+import {CompetitionCardComponent} from "../../competition/component/competition-card/competition-card.component";
+import {CompetitionFormComponent} from "../../competition/component/competition-form/competition-form.component";
+import {PaginationComponent} from "../../../shared/components/pagination/pagination.component";
+import {SearchComponent} from "../../../shared/components/search/search.component";
+import {TableComponent} from "../../competition/component/competition-table/table.component";
 import {Observable, of} from "rxjs";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
-import {CompetitionService} from "../../../../core/services/competition.service";
-import {AsyncPipe, NgIf} from "@angular/common";
-import {PaginationComponent} from "../../../../shared/components/pagination/pagination.component";
-import {Competition} from "../../../../core/models/competition";
-import {CompetitionCardComponent} from "../../component/competition-card/competition-card.component";
+import {CompetitionService} from "../../../core/services/competition.service";
+import {Competition} from "../../../core/models/competition";
 
 @Component({
-  selector: 'app-list-competition',
+  selector: 'app-user-list',
   standalone: true,
   imports: [
-    TableComponent,
-    SearchComponent,
-    CompetitionFormComponent,
     AsyncPipe,
-    PaginationComponent,
+    CompetitionCardComponent,
+    CompetitionFormComponent,
     NgIf,
-    CompetitionCardComponent
+    PaginationComponent,
+    SearchComponent,
+    TableComponent
   ],
-  templateUrl: './admin-list-competition.component.html'
+  templateUrl: './user-list.component.html'
 })
-export class AdminListCompetitionComponent  implements OnInit{
+export class UserListComponent {
   competitions$: Observable<any[]> = of([]);
   totalPages$: Observable<any> = of();
   currentPage$: Observable<any> = of();
@@ -187,10 +187,10 @@ export class AdminListCompetitionComponent  implements OnInit{
 
   onViewCompetition($event: Competition) {
 
+    console.log('View competition', $event);
     this.selectedCompetition$ = of($event);
     this.viewDetailButton.nativeElement.click();
 
   }
-
 
 }

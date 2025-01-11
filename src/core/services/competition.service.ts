@@ -11,7 +11,7 @@ import {Competition} from "../models/competition";
 })
 export class CompetitionService {
 
-  private readonly baseUrl = `${environment.apiUrl}/v1/competition`;
+  private readonly baseUrl = `${environment.apiUrl}/v1/competitions`;
 
   constructor(private http: HttpClient) { }
 

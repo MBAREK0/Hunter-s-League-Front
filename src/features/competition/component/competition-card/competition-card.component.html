@@ -40,7 +40,15 @@
                 <p class="mb-0 fs-11 text-800">{{ data.date | date:'MMMM dd, yyyy' }}</p>
               </div>
               <div class="mt-3 d-flex flex-lg-column gap-2">
-                <button class="btn btn-md btn-primary fs-10"><span class="fas fa-fire"></span><span class="ms-1 d-none d-lg-inline">Participate</span></button></div>
+                <div *ngIf="created && competitionId === data.id; else errorMessage" class="alert alert-success" role="alert">
+                  You have successfully participated in this competition.
+                </div>
+                <ng-template #errorMessage>
+                  <div *ngIf="errorServer && competitionId === data.id" class="alert alert-danger" role="alert">
+                    {{ errorServer }}
+                  </div>
+                </ng-template>
+                <button class="btn btn-md btn-primary fs-10" (click)="participate()"><span class="fas fa-fire"></span><span class="ms-1 d-none d-lg-inline">Participate</span></button></div>
             </div>
           </div>
         </div>
