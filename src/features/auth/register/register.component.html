@@ -15,7 +15,7 @@
               <div class="col-md-5 text-center bg-card-gradient">
                 <div class="position-relative p-4 pt-md-5 pb-md-7" data-bs-theme="light">
                   <div class="bg-holder bg-auth-card-shape" style="background-image:url(../../../assets/img/icons/spot-illustrations/half-circle.png);"></div><!--/.bg-holder-->
-                  <div class="z-1 position-relative"><a class="link-light mb-4 font-sans-serif fs-5 d-inline-block fw-bolder" href="../../../index.html">Hunter's League</a>
+                  <div class="z-1 position-relative"><a class="link-light mb-4 font-sans-serif fs-5 d-inline-block fw-bolder" href="../../../index.html">Online-Vue</a>
                     <p class="opacity-75 text-white">
                       Manage and join hunting competitions easily. Connect and compete today!
                     </p>
@@ -35,24 +35,6 @@
                       <input class="form-control" type="text" id="username" formControlName="username" autocomplete="off"/>
                       <div *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.invalid" class="text-danger">
                         <small *ngIf="registerForm.get('username')?.errors?.['required']">Username is required</small>
-                      </div>
-                    </div>
-
-                    <!-- First and Last Name -->
-                    <div class="row gx-2">
-                      <div class="mb-3 col-sm-6">
-                        <label class="form-label" for="firstName">First Name</label>
-                        <input class="form-control" type="text" id="firstName" formControlName="firstName" />
-                        <div *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid" class="text-danger">
-                          <small *ngIf="registerForm.get('firstName')?.errors?.['required']">First name is required</small>
-                        </div>
-                      </div>
-                      <div class="mb-3 col-sm-6">
-                        <label class="form-label" for="lastName">Last Name</label>
-                        <input class="form-control" type="text" id="lastName" formControlName="lastName" />
-                        <div *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid" class="text-danger">
-                          <small *ngIf="registerForm.get('lastName')?.errors?.['required']">Last name is required</small>
-                        </div>
                       </div>
                     </div>
 
@@ -88,27 +70,6 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row gx-2">
-                      <div class="mb-3 col-sm-6">
-                        <label class="form-label" for="cin">CIN</label>
-                        <input class="form-control" type="text" id="cin" formControlName="cin" />
-                        <div *ngIf="registerForm.get('cin')?.touched && registerForm.get('cin')?.invalid" class="text-danger">
-                          <small *ngIf="registerForm.get('cin')?.errors?.['required']">CIN is required</small>
-                        </div>
-                      </div>
-                      <div class="mb-3 col-sm-6">
-                        <label class="form-label" for="nationality">Nationality</label>
-                        <select class="form-select" id="nationality" formControlName="nationality">
-                          <option value="" disabled>Select one</option>
-                          <option *ngFor="let nationality of nationalities" [value]="nationality">{{ nationality }}</option>
-                        </select>
-                        <div *ngIf="registerForm.get('nationality')?.touched && registerForm.get('nationality')?.invalid" class="text-danger">
-                          <small *ngIf="registerForm.get('nationality')?.errors?.['required']">Nationality is required</small>
-                        </div>
-                      </div>
-                    </div>
-
-
                     <!-- Server Error Message -->
                     <div *ngIf="serverErrorMessage" class="text-danger mb-3">
                       <p>{{ serverErrorMessage }}</p>

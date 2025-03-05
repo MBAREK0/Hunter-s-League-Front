@@ -1,26 +1,19 @@
 import { Component } from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
-import { nationalities} from '../../../core/data/nationalities';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [
-    RouterLink,
-    ReactiveFormsModule,
-    CommonModule,
-    NgOptimizedImage
-  ],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, NgOptimizedImage],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
   serverErrorMessage: string | null = null;
-  nationalities: string[] = nationalities;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -36,11 +29,7 @@ export class RegisterComponent {
         ],
       ],
       confirmPassword: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      cin: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      nationality: ['', Validators.required],
     });
   }
 
@@ -56,13 +45,13 @@ export class RegisterComponent {
         return;
       }
 
-      this.authService.register(this.registerForm.value).subscribe({
-        next: (response) => {
-          // save the token in local storage
-          localStorage.setItem('token', response.token);
-          // redirect to the dashboard
-          this.router.navigate(['/']).then(r => console.log(r));
+      // Create a copy of the form values without confirmPassword
+      const { confirmPassword, ...formData } = this.registerForm.value;
 
+      this.authService.register(formData).subscribe({
+        next: (response) => {
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['/']).then(r => console.log(r));
           this.serverErrorMessage = null;
         },
         error: (err) => {
